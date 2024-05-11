@@ -1,4 +1,4 @@
-module github.com/silva4dev/golang-eda-project
+module github.com/silva4dev/golang-event-driven-arch-project
 
 go 1.18
 
