@@ -2,9 +2,9 @@ package database
 
 import (
 	"database/sql"
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
 	"testing"
 
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
 )
@@ -15,36 +15,40 @@ type ClientDBTestSuite struct {
 	clientDB *ClientDB
 }
 
-func (suite *ClientDBTestSuite) SetupSuite() {
+func (s *ClientDBTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
-	suite.Nil(err)
-	suite.db = db
-	db.Exec("CREATE TABLE clients (id varchar(255), name varchar(255), email varchar(255), created_at date)")
-	suite.clientDB = NewClientDB(db)
+	s.Nil(err)
+	s.db = db
+	db.Exec("Create table clients (id varchar(255), name varchar(255), email varchar(255), created_at date)")
+	s.clientDB = NewClientDB(db)
 }
 
-func (suite *ClientDBTestSuite) TearDownSuite() {
-	defer suite.db.Close()
-	suite.db.Exec("DROP TABLE clients")
+func (s *ClientDBTestSuite) TearDownSuite() {
+	defer s.db.Close()
+	s.db.Exec("DROP TABLE clients")
 }
 
 func TestClientDBTestSuite(t *testing.T) {
 	suite.Run(t, new(ClientDBTestSuite))
 }
 
-func (suite *ClientDBTestSuite) TestSave() {
-	client, _ := entity.NewClient("John Doe", "doe@example.com")
-	err := suite.clientDB.Save(client)
-	suite.Nil(err)
+func (s *ClientDBTestSuite) TestSave() {
+	client := &entity.Client{
+		ID:    "1",
+		Name:  "Test",
+		Email: "j@j.com",
+	}
+	err := s.clientDB.Save(client)
+	s.Nil(err)
 }
 
-func (suite *ClientDBTestSuite) TestGet() {
-	client, _ := entity.NewClient("John Doe", "doe@example.com")
-	suite.clientDB.Save(client)
+func (s *ClientDBTestSuite) TestGet() {
+	client, _ := entity.NewClient("John", "j@j.com")
+	s.clientDB.Save(client)
 
-	clientDB, err := suite.clientDB.Get(client.ID)
-	suite.Nil(err)
-	suite.Equal(client.ID, clientDB.ID)
-	suite.Equal(client.Name, clientDB.Name)
-	suite.Equal(client.Email, clientDB.Email)
+	clientDB, err := s.clientDB.Get(client.ID)
+	s.Nil(err)
+	s.Equal(client.ID, clientDB.ID)
+	s.Equal(client.Name, clientDB.Name)
+	s.Equal(client.Email, clientDB.Email)
 }
