@@ -2,7 +2,8 @@ package database
 
 import (
 	"database/sql"
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
+
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
 )
 
 type AccountDB struct {
