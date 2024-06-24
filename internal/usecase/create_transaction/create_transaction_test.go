@@ -1,9 +1,12 @@
-package createtransaction
+package create_transaction
 
 import (
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
-	"github/silva4dev/golang-event-driven-arch-project/internal/gateway/mocks"
 	"testing"
+
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/event"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/gateway/mocks"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/pkg/events"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -31,7 +34,10 @@ func TestCreateTransactionUseCase_Execute(t *testing.T) {
 		Amount:        100,
 	}
 
-	uc := NewCreateTransactionUseCase(mockTransaction, mockAccount)
+	dispatcher := events.NewEventDispatcher()
+	event := event.NewTransactionCreated()
+
+	uc := NewCreateTransactionUseCase(mockTransaction, mockAccount, dispatcher, event)
 	output, err := uc.Execute(inputDto)
 	assert.Nil(t, err)
 	assert.NotNil(t, output)

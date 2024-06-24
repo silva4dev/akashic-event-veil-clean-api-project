@@ -1,8 +1,8 @@
-package createaccount
+package create_account
 
 import (
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
-	"github/silva4dev/golang-event-driven-arch-project/internal/gateway"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/gateway"
 )
 
 type CreateAccountInputDTO struct {

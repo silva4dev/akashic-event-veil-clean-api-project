@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
 
 	"github.com/stretchr/testify/mock"
 )

@@ -1,9 +1,10 @@
-package createaccount
+package create_account
 
 import (
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
-	"github/silva4dev/golang-event-driven-arch-project/internal/gateway/mocks"
 	"testing"
+
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/gateway/mocks"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

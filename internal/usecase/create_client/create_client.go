@@ -1,9 +1,10 @@
-package createclient
+package create_client
 
 import (
-	"github/silva4dev/golang-event-driven-arch-project/internal/entity"
-	"github/silva4dev/golang-event-driven-arch-project/internal/gateway"
 	"time"
+
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
+	"github.com.br/silva4dev/golang-event-driven-arch-project/internal/gateway"
 )
 
 type CreateClientInputDTO struct {
@@ -29,22 +30,21 @@ func NewCreateClientUseCase(clientGateway gateway.ClientGateway) *CreateClientUs
 	}
 }
 
-func (uc *CreateClientUseCase) Execute(input *CreateClientInputDTO) (*CreateClientOutputDTO, error) {
+func (uc *CreateClientUseCase) Execute(input CreateClientInputDTO) (*CreateClientOutputDTO, error) {
 	client, err := entity.NewClient(input.Name, input.Email)
 	if err != nil {
 		return nil, err
 	}
-
 	err = uc.ClientGateway.Save(client)
 	if err != nil {
 		return nil, err
 	}
-
-	return &CreateClientOutputDTO{
+	output := &CreateClientOutputDTO{
 		ID:        client.ID,
 		Name:      client.Name,
 		Email:     client.Email,
 		CreatedAt: client.CreatedAt,
 		UpdatedAt: client.UpdatedAt,
-	}, nil
+	}
+	return output, nil
 }

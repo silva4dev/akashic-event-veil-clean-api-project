@@ -1,6 +1,6 @@
 package gateway
 
-import "github/silva4dev/golang-event-driven-arch-project/internal/entity"
+import "github.com.br/silva4dev/golang-event-driven-arch-project/internal/entity"
 
 type ClientGateway interface {
 	Get(id string) (*entity.Client, error)
