@@ -25,6 +25,7 @@ func (a *AccountDB) FindByID(id string) (*entity.Account, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	defer stmt.Close()
 	row := stmt.QueryRow(id)
 	err = row.Scan(
@@ -32,15 +33,13 @@ func (a *AccountDB) FindByID(id string) (*entity.Account, error) {
 		&account.Client.ID,
 		&account.Balance,
 		&account.CreatedAt,
-		&account.Client.ID,
-		&account.Client.Name,
-		&account.Client.Email,
-		&account.Client.CreatedAt,
-	)
+		&client.ID,
+		&client.Name,
+		&client.Email,
+		&client.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
-
 	return &account, nil
 }
 
@@ -50,11 +49,22 @@ func (a *AccountDB) Save(account *entity.Account) error {
 		return err
 	}
 	defer stmt.Close()
-
 	_, err = stmt.Exec(account.ID, account.Client.ID, account.Balance, account.CreatedAt)
 	if err != nil {
 		return err
 	}
+	return nil
+}
 
+func (a *AccountDB) UpdateBalance(account *entity.Account) error {
+	stmt, err := a.DB.Prepare("UPDATE accounts SET balance = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(account.Balance, account.ID)
+	if err != nil {
+		return err
+	}
 	return nil
 }
